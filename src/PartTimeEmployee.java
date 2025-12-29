@@ -1,7 +1,7 @@
 public class PartTimeEmployee extends Employee {
 
-    double hourlyRate;
-    int hoursWorked;
+    private final double hourlyRate;
+    private final int hoursWorked;
 
     public PartTimeEmployee(String name, String employeeId, double hourlyRate, int hoursWorked) {
         super(name, employeeId);

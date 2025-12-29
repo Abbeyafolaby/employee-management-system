@@ -1,6 +1,6 @@
 public class FullTimeEmployee extends Employee {
 
-    double monthlySalary;
+    private final double monthlySalary;
 
 
     public FullTimeEmployee(String name, String employeeId, double monthlySalary) {

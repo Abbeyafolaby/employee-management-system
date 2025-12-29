@@ -1,6 +1,6 @@
 public class Contractor extends Employee{
 
-    double projectPayment;
+    private final double projectPayment;
 
     public Contractor (String name, String employeeId, double projectPayment) {
         super(name, employeeId);

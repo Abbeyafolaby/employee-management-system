@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Department {
 
-    String departmentName;
-    ArrayList<Employee> employees = new ArrayList<>();
+    final String departmentName;
+    final ArrayList<Employee> employees = new ArrayList<>();
 
     public Department (String departmentName) {
         this.departmentName = departmentName;

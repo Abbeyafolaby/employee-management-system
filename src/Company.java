@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Company {
 
     String companyName;
-    ArrayList<Department> departments = new ArrayList<>();
+    private final ArrayList<Department> departments = new ArrayList<>();
 
     public Company (String companyName) {
         this.companyName = companyName;
@@ -29,14 +29,16 @@ public class Company {
 
         for (Department department : departments) {
             for (Employee employee : department.employees) {
+                boolean match = switch (type) {
+                    case "FullTime" -> employee instanceof FullTimeEmployee;
+                    case "PartTime" -> employee instanceof PartTimeEmployee;
+                    case "Contractor" -> employee instanceof Contractor;
+                    default -> false;
+                };
 
-                if (type.equals("FullTime") && employee instanceof FullTimeEmployee ||
-                    type.equals("PartTime") && employee instanceof PartTimeEmployee ||
-                        type.equals("Contractor") && employee instanceof  Contractor
-                ) {
+                if (match) {
                     result.add(employee);
                 }
-
             }
         }
         return result;
@@ -44,32 +46,39 @@ public class Company {
 
     public String getEmployeeNamesByType(String type) {
         ArrayList<Employee> employees = getEmployeesByType(type);
-        StringBuilder result = new StringBuilder();
 
+        if (employees.isEmpty()) {
+            return "No employees of type " + type;
+        }
+
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < employees.size(); i++) {
             result.append(employees.get(i).getName());
             if (i < employees.size() - 1) {
                 result.append(", ");
             }
         }
-
         return result.toString();
     }
 
 
     public Department getDepartmentWithHighestPayroll() {
-        Department highest = null;
-        double maxPayroll = 0;
+        if (departments.isEmpty()) {
+            return null;  // Explicit check is clearer
+        }
 
-        for (Department dept : departments) {
+        Department highest = departments.getFirst();
+        double maxPayroll = highest.getDepartmentPayroll();
+
+        for (int i = 1; i < departments.size(); i++) {  // Start from index 1
+            Department dept = departments.get(i);
             double payroll = dept.getDepartmentPayroll();
 
-            if (highest == null || payroll > maxPayroll) {
+            if (payroll > maxPayroll) {
                 highest = dept;
                 maxPayroll = payroll;
             }
         }
-
         return highest;
     }
 
